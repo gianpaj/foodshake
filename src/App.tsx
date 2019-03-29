@@ -11,6 +11,7 @@
 import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { ThemeProvider } from "react-native-elements";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 import SearchScreen from "./screens/SearchScreen";
 import ResultsScreen from "./screens/ResultsScreen";
@@ -38,11 +39,22 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
+const paperTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "tomato",
+    accent: "yellow"
+  }
+};
+
 export default class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <AppContainer />
+        <PaperProvider theme={paperTheme}>
+          <AppContainer />
+        </PaperProvider>
       </ThemeProvider>
     );
   }
