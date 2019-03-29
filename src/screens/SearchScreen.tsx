@@ -10,30 +10,132 @@
 
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, Checkbox } from "react-native-paper";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import colors from "../utils/colors";
+import { List } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
+const ingredients = [
+  {
+    name: "fruits",
+    icon: "food-apple",
+    data: [
+      {
+        name: "pear"
+      },
+      {
+        name: "apple"
+      },
+      {
+        name: "mango"
+      },
+      {
+        name: "strawberry"
+      },
+      {
+        name: "lemon"
+      },
+      {
+        name: "banana"
+      }
+    ]
+  },
+  {
+    name: "vegetables",
+    icon: "carrot",
+    data: [
+      {
+        name: "carrot"
+      },
+      {
+        name: "tomato"
+      }
+    ]
+  }
+];
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
 }
-export default class SearchScreen extends Component<Props> {
+interface State {
+  expanded: any;
+}
+export default class SearchScreen extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    const ingredientTypes = ingredients.map(i => i.name);
+
+    this.state = {
+      expanded: {}
+    };
+    // generate object with each ingredient type as key
+    // e.g. { expanded: { fruits: true, vegetables: true } };
+    ingredientTypes.forEach(ingredient => {
+      this.state.expanded[ingredient] = true;
+    });
+    // console.warn(this.state);
+  }
+
+  _handlePress = (key: string) =>
+    this.setState(prevState => ({
+      expanded: {
+        ...prevState.expanded,
+        [key]: !prevState.expanded[key]
+      }
+    }));
+
+  renderAccordion() {
+    return (
+      <List.Section>
+        {ingredients.map(ingredientType => (
+          <List.Accordion
+            expanded={this.state.expanded[ingredientType.name]}
+            key={ingredientType.name}
+            onPress={() => this._handlePress(ingredientType.name)}
+            title={ingredientType.name}
+            left={props => (
+              <Icon {...props} size={20} name={ingredientType.icon} />
+            )}
+          >
+            {ingredientType.data.map(ingredient => (
+              <List.Item
+                key={ingredient.name}
+                title={ingredient.name}
+                right={props => (
+                  <Checkbox status={true ? "checked" : "unchecked"} />
+                )}
+              />
+            ))}
+          </List.Accordion>
+        ))}
+      </List.Section>
+    );
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => this.props.navigation.navigate("Results")}
-        />
-      </View>
+      <>
+        {/* <View style={styles.container}>
+          <Text style={styles.instructions}>To get started, edit App.tsx</Text>
+          <Button
+            title="Go to Details"
+
+          />
+        </View> */}
+        {this.renderAccordion()}
+        <View style={{ alignSelf: "center" }}>
+          <Button
+            dark
+            onPress={() => this.props.navigation.navigate("Results")}
+            contentStyle={{ width: 221, height: 48 }}
+            style={{ elevation: 0 }}
+            mode="contained"
+          >
+            Search
+          </Button>
+        </View>
+      </>
     );
   }
 }
@@ -44,11 +146,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
   },
   instructions: {
     textAlign: "center",

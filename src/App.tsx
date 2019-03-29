@@ -43,9 +43,11 @@ const paperTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "tomato",
-    accent: "yellow"
-  }
+    primary: colors.slimeGreen,
+    // background: colors.slimeGreen,
+    text: colors.greyishBrown
+  },
+  roundness: 50
 };
 
 export default class App extends React.Component {

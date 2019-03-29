@@ -3,7 +3,9 @@ export default {
   primary1: "#4d86f7",
   primary2: "#6296f9",
   secondary: "#8F0CE8",
-  secondary2: "#00B233",
+  get secondary2() {
+    return this.slimeGreen;
+  },
   secondary3: "#00FF48",
   grey1: "#43484d",
   grey2: "#5e6977",
@@ -15,7 +17,11 @@ export default {
   black: "#000000",
   yellow: "#fff000",
   white: "#ffffff",
+  offWhite: "#f5fae5",
   red: "#ff001e",
-  green: "#00ff55",
+  slimeGreen: "#9cd400",
+  greyishBrown: "#65574d",
+  reddishGrey: "#8c8179",
+  camoGreen: "#3f2d20",
   transparent: "transparent"
 };
