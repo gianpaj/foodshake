@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { View, Text, Image, FlatList, StyleSheet } from "react-native";
-import { content } from "../helpers/contentful";
+import { getRecipe } from "../helpers/contentful";
 import { ActivityIndicator, Button } from "react-native-paper";
-import Icon from "react-native-vector-icons/AntDesign";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import Icon from "react-native-vector-icons/AntDesign";
 
 import colors from "../utils/colors";
+import { Recipe } from "../utils/types";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -16,13 +17,6 @@ interface IState {
   isLoading: boolean;
 }
 
-type Recipe = {
-  heading: string;
-  image: any;
-  ingredients: string[];
-  fullText: string[];
-};
-
 export default class SearchScreen extends Component<Props, IState> {
   state = {
     isLoading: true,
@@ -31,9 +25,9 @@ export default class SearchScreen extends Component<Props, IState> {
 
   componentDidMount() {
     const id = this.props.navigation.getParam("id", "7rQP3NpRz40gKmalq7lBjA");
-    content(id)
+    getRecipe(id)
       .then((entry: any) => this.setState({ entry, isLoading: false }))
-      .catch(e => {
+      .catch((e: Error) => {
         console.error(e);
         this.setState({ isLoading: false });
       });
@@ -66,13 +60,13 @@ export default class SearchScreen extends Component<Props, IState> {
     const { entry, isLoading } = this.state;
     return (
       <View>
-        <Button
+        {/* <Button
           style={styles.button}
           onPress={() => this.props.navigation.goBack()}
         >
           <Icon size={16} name="arrowleft" />
           Back to the list
-        </Button>
+        </Button> */}
         {isLoading ? (
           <ActivityIndicator
             animating={true}
@@ -95,7 +89,7 @@ export default class SearchScreen extends Component<Props, IState> {
 const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
-    color: "#3f2d20",
+    color: colors.camoGreen,
     paddingLeft: 16,
     paddingTop: 16,
     fontWeight: "500"
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
   },
   ingredientList: { paddingLeft: 8 },
   ingredient: {
-    backgroundColor: "#f5fae5",
+    backgroundColor: colors.offWhite,
     padding: 8,
     marginTop: 8,
     marginLeft: 8,
