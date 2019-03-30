@@ -59,6 +59,7 @@ interface Props {
 }
 interface State {
   expanded: any;
+  checkedIngredients: Map<any, any>;
 }
 export default class SearchScreen extends Component<Props, State> {
   constructor(props: Props) {
@@ -67,7 +68,8 @@ export default class SearchScreen extends Component<Props, State> {
     const ingredientTypes = ingredients.map(i => i.name);
 
     this.state = {
-      expanded: {}
+      expanded: {},
+      checkedIngredients: new Map()
     };
     // generate object with each ingredient type as key
     // e.g. { expanded: { fruits: true, vegetables: true } };
@@ -77,7 +79,7 @@ export default class SearchScreen extends Component<Props, State> {
     // console.warn(this.state);
   }
 
-  _handlePress = (key: string) =>
+  onAccordionPress = (key: string) =>
     this.setState(prevState => ({
       expanded: {
         ...prevState.expanded,
@@ -85,14 +87,26 @@ export default class SearchScreen extends Component<Props, State> {
       }
     }));
 
+  onIngredientPress = (key: string) => {
+    const { checkedIngredients } = this.state;
+    this.setState(prevState => ({
+      checkedIngredients: prevState.checkedIngredients.set(
+        key,
+        !checkedIngredients.get(key)
+      )
+    }));
+  };
+
   renderAccordion() {
+    const { checkedIngredients } = this.state;
+
     return (
       <List.Section>
         {ingredients.map(ingredientType => (
           <List.Accordion
             expanded={this.state.expanded[ingredientType.name]}
             key={ingredientType.name}
-            onPress={() => this._handlePress(ingredientType.name)}
+            onPress={this.onAccordionPress.bind(this, ingredientType.name)}
             title={ingredientType.name}
             left={props => (
               <Icon {...props} size={20} name={ingredientType.icon} />
@@ -101,9 +115,16 @@ export default class SearchScreen extends Component<Props, State> {
             {ingredientType.data.map(ingredient => (
               <List.Item
                 key={ingredient.name}
+                onPress={this.onIngredientPress.bind(this, ingredient.name)}
                 title={ingredient.name}
-                right={props => (
-                  <Checkbox status={true ? "checked" : "unchecked"} />
+                right={() => (
+                  <Checkbox
+                    status={
+                      checkedIngredients.get(ingredient.name)
+                        ? "checked"
+                        : "unchecked"
+                    }
+                  />
                 )}
               />
             ))}
