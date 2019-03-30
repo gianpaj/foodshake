@@ -9,7 +9,7 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Button, Checkbox } from "react-native-paper";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { List } from "react-native-paper";
