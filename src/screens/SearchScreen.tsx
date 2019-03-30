@@ -20,44 +20,131 @@ import colors from "../utils/colors";
 
 const ingredients = [
   {
-    name: "fruits",
+    name: "Fruits",
     icon: "food-apple",
     data: [
       {
-        name: "pears"
+        name: "banana"
       },
       {
-        name: "apples"
+        name: "grapefruit"
       },
       {
-        name: "mangoes"
+        name: "lemon"
+      },
+      {
+        name: "mango"
+      },
+      {
+        name: "orange"
+      },
+      {
+        name: "peach"
+      },
+      {
+        name: "pear"
+      },
+      {
+        name: "pineapple"
+      },
+      {
+        name: "pomegranate"
       },
       {
         name: "strawberry"
       },
       {
-        name: "lemons"
-      },
-      {
-        name: "bananas"
+        name: "watermelon"
       }
     ]
   },
   {
-    name: "vegetables",
+    name: "Vegetables",
     icon: "carrot",
     data: [
+      {
+        name: "artichoke"
+      },
       {
         name: "asparagus"
       },
       {
-        name: "carrots"
+        name: "bell pepper"
       },
       {
-        name: "tomatoes"
+        name: "broccoli"
+      },
+      {
+        name: "cabbage"
+      },
+      {
+        name: "carrot"
+      },
+      {
+        name: "cucumber"
       },
       {
         name: "mushroom"
+      },
+      {
+        name: "potato"
+      },
+      {
+        name: "pumpkin"
+      },
+      {
+        name: "radish"
+      },
+      {
+        name: "salad"
+      },
+      {
+        name: "tomato"
+      },
+      {
+        name: "zucchini"
+      }
+    ]
+  },
+  {
+    name: "Grains",
+    icon: "food-croissant",
+    data: [
+      {
+        name: "bread"
+      },
+      {
+        name: "cookies"
+      }
+    ]
+  },
+  {
+    name: "Dairy",
+    icon: "cow",
+    data: [
+      {
+        name: "cheese"
+      },
+      {
+        name: "milk"
+      }
+    ]
+  },
+  {
+    name: "Sea food",
+    icon: "food-croissant",
+    data: [
+      {
+        name: "crab"
+      },
+      {
+        name: "shrimp"
+      },
+      {
+        name: "lobster"
+      },
+      {
+        name: "oyster"
       }
     ]
   }
@@ -87,7 +174,7 @@ export default class SearchScreen extends Component<Props, State> {
     // generate object with each ingredient type as key
     // e.g. { expanded: { fruits: true, vegetables: true } };
     ingredientTypes.forEach(ingredient => {
-      this.state.expanded[ingredient] = true;
+      this.state.expanded[ingredient] = false;
     });
     // console.warn(this.state);
   }
@@ -133,7 +220,9 @@ export default class SearchScreen extends Component<Props, State> {
               <List.Item
                 key={ingredient.name}
                 onPress={() => this.onIngredientPress(ingredient.name)}
-                title={ingredient.name}
+                title={`${ingredient.name[0].toUpperCase()}${ingredient.name.slice(
+                  1
+                )}`}
                 right={() => (
                   <Checkbox.Android
                     color={colors.slimeGreen}

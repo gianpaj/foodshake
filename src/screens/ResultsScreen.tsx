@@ -107,7 +107,7 @@ export default class ResultsScreen extends Component<Props, State> {
       <View style={styles.container}>
         {recipes.length < 1 ? (
           <View>
-            <Headline>No recipies found :(</Headline>
+            <Headline>No recipes found :(</Headline>
           </View>
         ) : (
           <FlatList
