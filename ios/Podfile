@@ -31,8 +31,6 @@ target 'kakatonrn' do
 
   # Pods for onova
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-  pod 'TensorFlow-experimental'
 end
 
 
