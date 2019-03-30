@@ -114,25 +114,29 @@ export default class SearchScreen extends Component<Props, State> {
     const { checkedIngredients } = this.state;
 
     return (
-      <List.Section>
+      <List.Section style={{ flex: 1 }}>
         {ingredients.map(ingredientType => (
           <List.Accordion
             expanded={this.state.expanded[ingredientType.name]}
             key={ingredientType.name}
             onPress={this.onAccordionPress.bind(this, ingredientType.name)}
             title={ingredientType.name}
-            left={props => (
-              <Icon {...props} size={20} name={ingredientType.icon} />
-            )}
+            theme={{
+              colors: {
+                primary: colors.greyishBrown,
+                text: colors.greyishBrown
+              }
+            }}
+            left={() => <Icon size={20} name={ingredientType.icon} />}
           >
             {ingredientType.data.map(ingredient => (
               <List.Item
                 key={ingredient.name}
                 onPress={() => this.onIngredientPress(ingredient.name)}
                 title={ingredient.name}
-                right={({ color }) => (
-                  <Checkbox
-                    color={color}
+                right={() => (
+                  <Checkbox.Android
+                    color={colors.slimeGreen}
                     status={
                       checkedIngredients.get(ingredient.name)
                         ? "checked"
@@ -164,10 +168,19 @@ export default class SearchScreen extends Component<Props, State> {
 
           />
         </View> */}
-        {this.renderAccordion()}
-        <View style={{ alignSelf: "center" }}>
+        <ScrollView>{this.renderAccordion()}</ScrollView>
+        <View
+          style={{
+            alignSelf: "center",
+            height: 62,
+            justifyContent: "center"
+          }}
+        >
           <Button
             dark
+            disabled={
+              mapToArrayOfStrings(this.state.checkedIngredients).length < 1
+            }
             onPress={this.goToResultsScreen}
             contentStyle={{ width: 221, height: 48 }}
             style={{ elevation: 0 }}

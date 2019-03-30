@@ -9,9 +9,13 @@
  */
 
 import React, { Component } from "react";
+import {
+  NavigationScreenProp,
+  NavigationState,
+  ScrollView
+} from "react-navigation";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-elements";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
     backgroundColor: "#F5FCFF"
   },
   welcome: {

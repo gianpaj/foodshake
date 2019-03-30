@@ -22,6 +22,7 @@ export default {
   slimeGreen: "#9cd400",
   greyishBrown: "#65574d",
   reddishGrey: "#8c8179",
+  orange: "#ffbf00",
   camoGreen: "#3f2d20",
   transparent: "transparent"
 };
