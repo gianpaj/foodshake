@@ -14,6 +14,9 @@ import { Button, Checkbox } from "react-native-paper";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { List } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
+
+import colors from "../utils/colors";
 
 const ingredients = [
   {
@@ -21,22 +24,22 @@ const ingredients = [
     icon: "food-apple",
     data: [
       {
-        name: "pear"
+        name: "pears"
       },
       {
-        name: "apple"
+        name: "apples"
       },
       {
-        name: "mango"
+        name: "mangoes"
       },
       {
         name: "strawberry"
       },
       {
-        name: "lemon"
+        name: "lemons"
       },
       {
-        name: "banana"
+        name: "bananas"
       }
     ]
   },
@@ -45,10 +48,16 @@ const ingredients = [
     icon: "carrot",
     data: [
       {
-        name: "carrot"
+        name: "asparagus"
       },
       {
-        name: "tomato"
+        name: "carrots"
+      },
+      {
+        name: "tomatoes"
+      },
+      {
+        name: "mushroom"
       }
     ]
   }
@@ -62,6 +71,10 @@ interface State {
   checkedIngredients: Map<any, any>;
 }
 export default class SearchScreen extends Component<Props, State> {
+  static navigationOptions = {
+    title: "Choose your ingredients"
+  };
+
   constructor(props: Props) {
     super(props);
 
