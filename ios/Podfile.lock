@@ -53,6 +53,7 @@ PODS:
     - React/RCTBlob
   - RNVectorIcons (6.4.2):
     - React
+  - TensorFlowLite (1.12.0)
   - yoga (0.59.2.React)
 
 DEPENDENCIES:
@@ -68,11 +69,13 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - TensorFlowLite (= 1.12.0)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
+    - TensorFlowLite
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -95,8 +98,9 @@ SPEC CHECKSUMS:
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
   RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
+  TensorFlowLite: e81aef029750aa46b42ad16553fa4cddd81498cc
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 540bd16edec8d621d48a5bd7d2a98025d350083e
+PODFILE CHECKSUM: d2fd19a0838a4f8ac231116e0c1fc6dbe59f89bc
 
 COCOAPODS: 1.5.3
