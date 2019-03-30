@@ -1,63 +1,58 @@
 import React, { Component } from "react";
 import { View, Text, Image, FlatList, StyleSheet } from "react-native";
 import { content } from "../helpers/contentful";
-import { Button } from "react-native-paper";
+import { ActivityIndicator, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+
+import colors from "../utils/colors";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
 }
 
 interface IState {
+  entry: Recipe;
+  isLoading: boolean;
+}
+
+type Recipe = {
   heading: string;
   image: any;
   ingredients: string[];
   fullText: string[];
-}
+};
 
 export default class SearchScreen extends Component<Props, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      heading: "Single Recipe",
-      fullText: [""],
-      ingredients: [""],
-      image: {
-        uri: "https://facebook.github.io/react-native/docs/assets/favicon.png"
-      }
-    };
-  }
-  text = "Single Recipe";
+  state = {
+    isLoading: true,
+    entry: {} as Recipe
+  };
 
   componentDidMount() {
-    content().then((entry: any) => {
-      const uri = entry.fields.image.fields.file.url;
-      this.setState({
-        heading: entry.fields.name,
-        fullText: entry.fields.fullText.content.map(
-          (p: any) => p.content[0].value
-        ),
-        ingredients: entry.fields.ingredients.map(
-          (ingr: any) => ingr.fields.name
-        ),
-        image: {
-          uri: `https:${uri}`
-        }
+    const id = this.props.navigation.getParam("id", "7rQP3NpRz40gKmalq7lBjA");
+    content(id)
+      .then((entry: any) => this.setState({ entry, isLoading: false }))
+      .catch(e => {
+        console.error(e);
+        this.setState({ isLoading: false });
       });
-    });
   }
 
   getFullText() {
-    return <Text style={styles.fullText}>{this.state.fullText}</Text>;
+    return <Text style={styles.fullText}>{this.state.entry.fullText}</Text>;
   }
 
+  _keyExtractor = (item: string) => item;
+
   ingredientsList() {
+    const { entry } = this.state;
     return (
       <FlatList
         style={styles.ingredientList}
         horizontal
-        data={this.state.ingredients}
+        data={entry.ingredients}
+        keyExtractor={this._keyExtractor}
         renderItem={({ item }) => (
           <Text style={styles.ingredient} key={item}>
             {item}
@@ -68,19 +63,30 @@ export default class SearchScreen extends Component<Props, IState> {
   }
 
   render() {
+    const { entry, isLoading } = this.state;
     return (
       <View>
         <Button
           style={styles.button}
           onPress={() => this.props.navigation.goBack()}
         >
-          <Icon size={16} name={"arrowleft"} />
+          <Icon size={16} name="arrowleft" />
           Back to the list
         </Button>
-        {this.ingredientsList()}
-        <Image style={styles.image} source={this.state.image} />
-        <Text style={styles.heading}>{this.state.heading}</Text>
-        {this.getFullText()}
+        {isLoading ? (
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={colors.slimeGreen}
+          />
+        ) : (
+          <>
+            {this.ingredientsList()}
+            <Image style={styles.image} source={entry.image} />
+            <Text style={styles.heading}>{entry.heading}</Text>
+            {this.getFullText()}
+          </>
+        )}
       </View>
     );
   }
@@ -103,10 +109,10 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 8,
     marginLeft: 8,
-    borderColor: "#9cd400",
+    borderColor: colors.slimeGreen,
     borderWidth: 1,
     borderRadius: 4,
-    color: "#9cd400"
+    color: colors.slimeGreen
   },
   image: {
     width: "100%",
