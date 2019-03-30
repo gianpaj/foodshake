@@ -15,16 +15,18 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 import SearchScreen from "./screens/SearchScreen";
 import ResultsScreen from "./screens/ResultsScreen";
+import SingleRecipeScreen from "./screens/SingleRecipeScreen";
 import colors from "./utils/colors";
 import theme from "./theme";
 
 const RootStack = createStackNavigator(
   {
     Search: SearchScreen,
-    Results: ResultsScreen
+    Results: ResultsScreen,
+    Recipe: SingleRecipeScreen,
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: "Recipe",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: colors.secondary2
