@@ -58,3 +58,8 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+
+# iOS pods
+ios/Pods/*
+!ios/Pods/Manifest.lock
