@@ -23,10 +23,10 @@ const RootStack = createStackNavigator(
   {
     Search: SearchScreen,
     Results: ResultsScreen,
-    Recipe: SingleRecipeScreen,
+    Recipe: SingleRecipeScreen
   },
   {
-    initialRouteName: "Recipe",
+    initialRouteName: "Search",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: colors.secondary2

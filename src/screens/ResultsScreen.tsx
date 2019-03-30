@@ -17,6 +17,12 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState>;
 }
 export default class ResultsScreen extends Component<Props> {
+  componentDidMount() {
+    const { navigation } = this.props;
+    const ingredients = navigation.getParam("ingredients", []);
+    console.warn(ingredients);
+  }
+
   render() {
     return (
       <View style={styles.container}>

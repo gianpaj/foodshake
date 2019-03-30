@@ -115,10 +115,11 @@ export default class SearchScreen extends Component<Props, State> {
             {ingredientType.data.map(ingredient => (
               <List.Item
                 key={ingredient.name}
-                onPress={this.onIngredientPress.bind(this, ingredient.name)}
+                onPress={() => this.onIngredientPress(ingredient.name)}
                 title={ingredient.name}
-                right={() => (
+                right={({ color }) => (
                   <Checkbox
+                    color={color}
                     status={
                       checkedIngredients.get(ingredient.name)
                         ? "checked"
@@ -134,6 +135,12 @@ export default class SearchScreen extends Component<Props, State> {
     );
   }
 
+  goToResultsScreen = () => {
+    this.props.navigation.navigate("Results", {
+      ingredients: mapToArrayOfStrings(this.state.checkedIngredients)
+    });
+  };
+
   render() {
     return (
       <>
@@ -148,7 +155,7 @@ export default class SearchScreen extends Component<Props, State> {
         <View style={{ alignSelf: "center" }}>
           <Button
             dark
-            onPress={() => this.props.navigation.navigate("Results")}
+            onPress={this.goToResultsScreen}
             contentStyle={{ width: 221, height: 48 }}
             style={{ elevation: 0 }}
             mode="contained"
@@ -174,3 +181,11 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+
+function mapToArrayOfStrings(strMap: Map<any, any>) {
+  const arr = [];
+  for (let [k, v] of strMap) {
+    if (v) arr.push(k);
+  }
+  return arr;
+}
